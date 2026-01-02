@@ -7,16 +7,18 @@ namespace GameStore.Api.Endpoints;
 public static class GamesEndpoints
 {
     const string FetchGameEndpoint = "GetGame";
-
+ 
     private static List<GameDto> games = [
-    new (1, "Grand Theft Auto V", "Action-adventure", 29.99m, new DateOnly(2013, 9, 17)),
-    new (2, "Grand Theft Auto IV", "Action-adventure", 19.99m, new DateOnly(2009, 9, 17)),
-    new (1, "Grand Theft Auto III", "Action-adventure", 9.99m, new DateOnly(2003, 9, 17)),
+        new (1, "Grand Theft Auto V", "Action-adventure", 29.99m, new DateOnly(2013, 9, 17)),
+        new (2, "Grand Theft Auto IV", "Action-adventure", 19.99m, new DateOnly(2009, 9, 17)),
+        new (1, "Grand Theft Auto III", "Action-adventure", 9.99m, new DateOnly(2003, 9, 17)),
     ];
 
     public static void MapGamesEndpoints(this WebApplication app) {
 
-        var group = app.MapGroup("/games");
+        app.MapGet("/", () => new { message = "GameStore API", endpoint = "/games/all" });
+
+        var group = app.MapGroup("/game");
 
         group.MapGet("/all", () => games);
 
@@ -29,6 +31,12 @@ public static class GamesEndpoints
 
         group.MapPost("/add", (CreateGameDto newGame) =>
         {
+            // Possible but bad approach
+            // if (String.IsNullOrEmpty(newGame.Name))
+            // {
+            //     return Results.BadRequest("Name is Required");
+            // } We will have to apply this for every data object
+
             GameDto game = new (
                 games.Count + 1,
                 newGame.Name,
