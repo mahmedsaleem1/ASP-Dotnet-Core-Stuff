@@ -17,7 +17,7 @@ public static class DataExtensions
     }
     public static void AddGenreToDb(this WebApplicationBuilder builder)
     {
-        var connString = "Data Source=GameStore.db"; // sqlite db // Options
+        var connString = builder.Configuration.GetConnectionString("GameStore"); // sqlite db // Options
         builder.Services.AddSqlite<GameStoreContexts>(
             connString,
             optionsAction: options => options.UseSeeding((context, _) =>

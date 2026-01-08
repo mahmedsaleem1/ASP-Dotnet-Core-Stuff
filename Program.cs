@@ -1,9 +1,11 @@
-using GameStore.Api;
 using GameStore.Api.Data;
 using GameStore.Api.Endpoints;
 
+using DotNetEnv;
 
 var builder = WebApplication.CreateBuilder(args);
+
+Env.Load();
 
 builder.Services.AddValidation(); // For every Endpoint
 // Before creating app
@@ -12,6 +14,9 @@ builder.Services.AddValidation(); // For every Endpoint
 builder.AddGenreToDb();
 
 var app = builder.Build();
+
+// var secret = Environment.GetEnvironmentVariable("NAME");
+// Console.WriteLine(secret);
 
 app.MapGamesEndpoints();
 
