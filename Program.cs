@@ -6,10 +6,10 @@ using GameStore.Api.Endpoints;
 var builder = WebApplication.CreateBuilder(args);
 
 builder.Services.AddValidation(); // For every Endpoint
-// Before creatingg app
+// Before creating app
 // Registering Database
-var connString = "Data Source=GameStore.db"; // sqlite db // Options
-builder.Services.AddSqlite<GameStoreContexts>(connString);
+
+builder.AddGenreToDb();
 
 var app = builder.Build();
 
